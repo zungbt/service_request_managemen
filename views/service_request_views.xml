@@ -1,0 +1,94 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+    <!-- Tree View -->
+    <record id="view_service_request_tree" model="ir.ui.view">
+        <field name="name">service.request.tree</field>
+        <field name="model">service.request</field>
+        <field name="arch" type="xml">
+            <tree string="Service Requests" 
+                  decoration-info="state == 'draft'" 
+                  decoration-warning="state == 'submitted'"
+                  decoration-success="state == 'done'">
+                <field name="name"/>
+                <field name="customer_id"/>
+                <field name="service_type"/>
+                <field name="assigned_to"/>
+                <field name="deadline"/>
+                <field name="amount_estimate" sum="Total Amount"/>
+                <field name="state" widget="badge"
+                       decoration-info="state == 'draft'"
+                       decoration-warning="state == 'submitted'"
+                       decoration-success="state == 'done'"
+                       decoration-danger="state == 'cancelled'"/>
+            </tree>
+        </field>
+    </record>
+
+    <!-- Form View -->
+    <record id="view_service_request_form" model="ir.ui.view">
+        <field name="name">service.request.form</field>
+        <field name="model">service.request</field>
+        <field name="arch" type="xml">
+            <form string="Service Request">
+                <header>
+                    <button name="action_submit" string="Submit Request" type="object" class="oe_highlight" invisible="state != 'draft'"/>
+                    <button name="action_approve" string="Approve" type="object" class="oe_highlight" invisible="state != 'submitted'"/>
+                    <button name="action_done" string="Mark Done" type="object" class="oe_highlight" invisible="state != 'approved'"/>
+                    <button name="action_cancel" string="Cancel Request" type="object" invisible="state in ('done','cancelled')"/>
+                    <button name="action_reset_draft" string="Reset to Draft" type="object" invisible="state != 'cancelled'"/>
+                    <button name="action_reopen" string="Reopen Request" type="object" invisible="state != 'done'"/>
+                    <field name="state" widget="statusbar" statusbar_visible="draft,submitted,approved,done"/>
+                </header>
+                <sheet>
+                    <div class="oe_title">
+                        <label for="name"/>
+                        <h1><field name="name"/></h1>
+                    </div>
+                    <group>
+                        <group string="Customer Information">
+                            <field name="customer_id" placeholder="Select customer..."/>
+                            <field name="request_date"/>
+                        </group>
+                        <group string="Service Details">
+                            <field name="service_type"/>
+                            <field name="amount_estimate"/>
+                        </group>
+                    </group>
+                    <group>
+                        <group string="Assignment &amp; Deadline">
+                            <field name="assigned_to" placeholder="Select employee..."/>
+                            <field name="deadline"/>
+                        </group>
+                    </group>
+                    <notebook>
+                        <page string="Description">
+                            <field name="description" placeholder="Enter service request details..." nolabel="1"/>
+                        </page>
+                        <page string="Internal Notes">
+                            <field name="note" placeholder="Notes for employees..." nolabel="1"/>
+                        </page>
+                    </notebook>
+                </sheet>
+                <div class="oe_chatter">
+                    <field name="message_follower_ids"/>
+                    <field name="activity_ids"/>
+                    <field name="message_ids"/>
+                </div>
+            </form>
+        </field>
+    </record>
+
+    <!-- Action -->
+    <record id="action_service_request" model="ir.actions.act_window">
+        <field name="name">Service Requests</field>
+        <field name="res_model">service.request</field>
+        <field name="view_mode">tree,form</field>
+        <field name="help" type="html">
+            <p class="o_view_nocontent_smiling_face">Click "New" to create your first service request!</p>
+        </field>
+    </record>
+
+    <!-- Menu -->
+    <menuitem id="menu_service_request_root" name="Service" web_icon="base,static/description/settings.png" sequence="10"/>
+    <menuitem id="menu_service_request_main" name="All Requests" parent="menu_service_request_root" action="action_service_request" sequence="1"/>
+</odoo>

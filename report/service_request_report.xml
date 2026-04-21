@@ -1,0 +1,76 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+    <template id="report_service_request_template">
+        <t t-call="web.html_container">
+            <t t-foreach="docs" t-as="o">
+                <t t-call="web.external_layout">
+                    <div class="page">
+                        <div class="oe_structure"/>
+                        
+                        <div class="row">
+                            <div class="col-12 text-center">
+                                <h2 style="color: #875a7b; font-weight: bold;">SERVICE REQUEST REPORT</h2>
+                                <h4 style="margin-top: -10px;">Code: <t t-esc="o.name"/></h4>
+                            </div>
+                        </div>
+
+                        <!-- Top Information Section -->
+                        <div class="row mt16 mb16" style="border-bottom: 1px solid #eee; padding-bottom: 10px;">
+                            <div class="col-6">
+                                <strong>Customer:</strong>
+                                <p t-field="o.customer_id.name" style="margin:0;"/>
+                                <p t-field="o.customer_id.contact_address" style="margin:0; font-size: 0.9em; color: #666;"/>
+                                <div class="mt8"><strong>Assigned To:</strong> <span t-field="o.assigned_to.name"/></div>
+                            </div>
+                            <div class="col-6">
+                                <strong>Service Information:</strong>
+                                <div><b>Type:</b> <t t-esc="dict(o._fields['service_type'].selection).get(o.service_type)"/></div>
+                                <div><b>Request Date:</b> <span t-field="o.request_date" t-options='{"widget": "datetime", "format": "dd/MM/yyyy"}'/></div>
+                                <div><b>Deadline:</b> <span t-field="o.deadline" t-options='{"widget": "datetime", "format": "dd/MM/yyyy"}'/></div>
+                                <div class="mt8"><strong>Current Status:</strong> <span t-field="o.state" style="text-transform: capitalize;"/></div>
+                            </div>
+                        </div>
+
+                        <!-- Description Table -->
+                        <table class="table table-sm o_main_table mt16">
+                            <thead>
+                                <tr style="background-color: #f2f2f2;">
+                                    <th style="width: 70%;">Job Description</th>
+                                    <th class="text-end">Estimated Amount</th>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                <tr>
+                                    <td><span t-field="o.description"/></td>
+                                    <td class="text-end">
+                                        <span t-field="o.amount_estimate" t-options='{"widget": "monetary", "display_currency": o.env.company.currency_id}'/>
+                                    </td>
+                                </tr>
+                            </tbody>
+                        </table>
+
+                        <!-- Notes Section -->
+                        <div class="row mt16">
+                            <div class="col-12">
+                                <strong>Notes:</strong>
+                                <p t-field="o.note" style="min-height: 50px; font-style: italic; color: #555;"/>
+                            </div>
+                        </div>
+
+                        <!-- Signatures -->
+                        <div class="row mt64">
+                            <div class="col-6 text-center">
+                                <p><strong>Customer Signature</strong></p>
+                            </div>
+                            <div class="col-6 text-center">
+                                <p><strong>Prepared By</strong></p>
+                            </div>
+                        </div>
+
+                        <div class="oe_structure"/>
+                    </div>
+                </t>
+            </t>
+        </t>
+    </template>
+</odoo>
