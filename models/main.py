@@ -81,6 +81,16 @@ class ServiceRequest(models.Model):
 
         for rec in records:
             rec._send_notification('service_request_managemen.email_template_deadline_reminder')
+            
+            # Create a 'To Do' activity if it doesn't exist yet
+            existing_activities = rec.activity_ids.filtered(lambda a: a.summary == 'Deadline Reminder')
+            if not existing_activities and rec.assigned_to:
+                rec.activity_schedule(
+                    'mail.mail_activity_data_todo',
+                    user_id=rec.assigned_to.id,
+                    summary='Deadline Reminder',
+                    note='This service request is nearing its deadline. Please check and complete it!'
+                )
 
     def _send_notification(self, template_xml_id):
         template = self.env.ref(template_xml_id, raise_if_not_found=False)
