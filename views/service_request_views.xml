@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
 <odoo>
-    <!-- Tree View (Updated to only show 5 required columns) -->
+    <!-- Tree View -->
     <record id="view_service_request_tree" model="ir.ui.view">
         <field name="name">service.request.tree</field>
         <field name="model">service.request</field>
@@ -22,7 +22,7 @@
         </field>
     </record>
 
-    <!-- Form View (Keeping as is, it already has all fields) -->
+    <!-- Form View (Restructured) -->
     <record id="view_service_request_form" model="ir.ui.view">
         <field name="name">service.request.form</field>
         <field name="model">service.request</field>
@@ -43,18 +43,23 @@
                         <h1><field name="name"/></h1>
                     </div>
                     <group>
+                        <!-- Group 1: Customer Information -->
                         <group string="Customer Information">
                             <field name="customer_id" placeholder="Select customer..."/>
                             <field name="request_date"/>
                         </group>
-                        <group string="Service Details">
+                        <!-- Group 2: Service Information -->
+                        <group string="Service Information">
                             <field name="service_type"/>
                             <field name="amount_estimate"/>
                         </group>
                     </group>
-                    <group>
-                        <group string="Assignment &amp; Deadline">
+                    <!-- Group 3: Deadline + Assigned -->
+                    <group string="Assignment &amp; Deadline">
+                        <group>
                             <field name="assigned_to" placeholder="Select employee..."/>
+                        </group>
+                        <group>
                             <field name="deadline"/>
                         </group>
                     </group>
@@ -67,6 +72,7 @@
                         </page>
                     </notebook>
                 </sheet>
+                <!-- Chatter Section -->
                 <div class="oe_chatter">
                     <field name="message_follower_ids"/>
                     <field name="activity_ids"/>
