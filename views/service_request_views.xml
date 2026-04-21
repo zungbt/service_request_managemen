@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
 <odoo>
-    <!-- Tree View -->
+    <!-- Tree View (Updated to only show 5 required columns) -->
     <record id="view_service_request_tree" model="ir.ui.view">
         <field name="name">service.request.tree</field>
         <field name="model">service.request</field>
@@ -10,21 +10,19 @@
                   decoration-warning="state == 'submitted'"
                   decoration-success="state == 'done'">
                 <field name="name"/>
-                <field name="customer_id"/>
+                <field name="customer_id" string="Customer"/>
                 <field name="service_type"/>
-                <field name="assigned_to"/>
-                <field name="deadline"/>
-                <field name="amount_estimate" sum="Total Amount"/>
                 <field name="state" widget="badge"
                        decoration-info="state == 'draft'"
                        decoration-warning="state == 'submitted'"
                        decoration-success="state == 'done'"
                        decoration-danger="state == 'cancelled'"/>
+                <field name="deadline"/>
             </tree>
         </field>
     </record>
 
-    <!-- Form View -->
+    <!-- Form View (Keeping as is, it already has all fields) -->
     <record id="view_service_request_form" model="ir.ui.view">
         <field name="name">service.request.form</field>
         <field name="model">service.request</field>
