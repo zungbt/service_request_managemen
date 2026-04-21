@@ -1,0 +1,24 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+    <!-- Category for the module -->
+    <record id="module_category_service_request" model="ir.module.category">
+        <field name="name">Service Request</field>
+        <field name="description">Helps you manage internal service requests.</field>
+        <field name="sequence">10</field>
+    </record>
+
+    <!-- Service User Group -->
+    <record id="group_service_request_user" model="res.groups">
+        <field name="name">Service User</field>
+        <field name="category_id" ref="module_category_service_request"/>
+        <field name="implied_ids" eval="[(4, ref('base.group_user'))]"/>
+    </record>
+
+    <!-- Service Manager Group -->
+    <record id="group_service_request_manager" model="res.groups">
+        <field name="name">Service Manager</field>
+        <field name="category_id" ref="module_category_service_request"/>
+        <field name="implied_ids" eval="[(4, ref('group_service_request_user'))]"/>
+        <field name="users" eval="[(4, ref('base.user_root')), (4, ref('base.user_admin'))]"/>
+    </record>
+</odoo>
