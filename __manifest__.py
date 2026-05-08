@@ -4,7 +4,7 @@
     'summary': 'Module for managing internal service requests',
     'category': 'Services',
     'author': 'Zungg',
-    'depends': ['base', 'mail','product','stock'],
+    'depends': ['base', 'mail','product','stock', 'portal'],
     'data': [
         'security/res_groups.xml',
         'security/ir.model.access.csv',
@@ -17,6 +17,7 @@
         'views/laptop_view.xml',
         'views/service_request_views.xml',
         'views/res_partner_views.xml',
+        'views/portal_templates.xml',
         'wizard/service_request_reopen_wizard_view.xml',
         'report/report_action.xml',
 
