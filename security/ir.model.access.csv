@@ -1,3 +1,14 @@
 id,name,model_id:id,group_id:id,perm_read,perm_write,perm_create,perm_unlink
 access_service_request_user,service.request.user,model_service_request,group_service_request_user,1,1,1,0
 access_service_request_manager,service.request.manager,model_service_request,group_service_request_manager,1,1,1,1
+access_service_request_line_user,service.request.line.user,model_service_request_line,group_service_request_user,1,1,1,1
+access_service_request_line_manager,service.request.line.manager,model_service_request_line,group_service_request_manager,1,1,1,1
+
+access_laptop_sale_user,laptop.sale.user,model_laptop_sale,group_service_request_user,1,1,1,1
+access_laptop_sale_manager,laptop.sale.manager,model_laptop_sale,group_service_request_manager,1,1,1,1
+access_laptop_sale_line_user,laptop.sale.line.user,model_laptop_sale_line,group_service_request_user,1,1,1,1
+access_laptop_sale_line_manager,laptop.sale.line.manager,model_laptop_sale_line,group_service_request_manager,1,1,1,1
+access_service_request_reopen_wizard_user,service.request.reopen.wizard.user,model_service_request_reopen_wizard,group_service_request_user,1,1,1,1
+access_service_request_reopen_wizard_manager,service.request.reopen.wizard.manager,model_service_request_reopen_wizard,group_service_request_manager,1,1,1,1
+
+

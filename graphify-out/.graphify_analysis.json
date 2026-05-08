@@ -1,0 +1,108 @@
+{
+  "communities": {
+    "0": [
+      "models_laptop_compute_line_totals",
+      "models_laptop_compute_totals",
+      "models_laptop_laptopinventory",
+      "models_laptop_laptopinventory_toggle_active",
+      "models_laptop_laptopsaleline",
+      "models_laptop_onchange_buy_in_price",
+      "models_laptop_onchange_laptop_id",
+      "models_laptop_py"
+    ],
+    "1": [
+      "models_main_rationale_118",
+      "models_main_servicerequest",
+      "models_main_servicerequest_action_approve",
+      "models_main_servicerequest_action_done",
+      "models_main_servicerequest_action_reopen",
+      "models_main_servicerequest_action_reset_draft",
+      "models_main_servicerequest_action_submit",
+      "models_main_servicerequest_send_notification"
+    ],
+    "2": [
+      "models_main_action_send_deadline_reminder",
+      "models_main_amount_all",
+      "models_main_create",
+      "models_main_onchange_deadline",
+      "models_main_py"
+    ],
+    "3": [
+      "models_laptop_laptopsale",
+      "models_laptop_laptopsale_action_cancel",
+      "models_laptop_laptopsale_action_confirm",
+      "models_laptop_laptopsale_action_draft"
+    ],
+    "4": [
+      "models_request_line_compute_amount",
+      "models_request_line_onchange_product_id",
+      "models_request_line_py"
+    ],
+    "5": [
+      "init_py"
+    ],
+    "6": [
+      "manifest_py"
+    ],
+    "7": [
+      "models_main_rationale_125"
+    ]
+  },
+  "cohesion": {
+    "0": 0.25,
+    "1": 0.32,
+    "2": 0.4,
+    "3": 0.5,
+    "4": 0.67,
+    "5": 1.0,
+    "6": 1.0,
+    "7": 1.0
+  },
+  "gods": [
+    {
+      "id": "models_main_servicerequest",
+      "label": "ServiceRequest",
+      "degree": 9
+    },
+    {
+      "id": "models_laptop_laptopsale",
+      "label": "LaptopSale",
+      "degree": 4
+    },
+    {
+      "id": "models_laptop_laptopinventory",
+      "label": "LaptopInventory",
+      "degree": 2
+    },
+    {
+      "id": "models_main_create",
+      "label": "create()",
+      "degree": 2
+    },
+    {
+      "id": "models_main_action_send_deadline_reminder",
+      "label": "action_send_deadline_reminder()",
+      "degree": 2
+    },
+    {
+      "id": "models_laptop_laptopsaleline",
+      "label": "LaptopSaleLine",
+      "degree": 1
+    },
+    {
+      "id": "models_main_rationale_118",
+      "label": "Reopen a completed request",
+      "degree": 1
+    },
+    {
+      "id": "models_main_rationale_125",
+      "label": "Daily cron reminder logic",
+      "degree": 0
+    }
+  ],
+  "surprises": [],
+  "tokens": {
+    "input": 0,
+    "output": 0
+  }
+}

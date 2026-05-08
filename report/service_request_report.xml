@@ -24,7 +24,6 @@
                             </div>
                             <div class="col-6">
                                 <strong>Service Information:</strong>
-                                <div><b>Type:</b> <t t-esc="dict(o._fields['service_type'].selection).get(o.service_type)"/></div>
                                 <div><b>Request Date:</b> <span t-field="o.request_date" t-options='{"widget": "datetime", "format": "dd/MM/yyyy"}'/></div>
                                 <div><b>Deadline:</b> <span t-field="o.deadline" t-options='{"widget": "datetime", "format": "dd/MM/yyyy"}'/></div>
                                 <div class="mt8"><strong>Current Status:</strong> <span t-field="o.state" style="text-transform: capitalize;"/></div>
@@ -35,18 +34,44 @@
                         <table class="table table-sm o_main_table mt16">
                             <thead>
                                 <tr style="background-color: #f2f2f2;">
-                                    <th style="width: 70%;">Job Description</th>
-                                    <th class="text-end">Estimated Amount</th>
+                                    <th style="width: 20%;">Loại</th>
+                                    <th style="width: 40%;">Dịch vụ</th>
+                                    <th class="text-end" style="width: 15%;">SL</th>
+                                    <th class="text-end" style="width: 25%;">Thành tiền</th>
                                 </tr>
                             </thead>
                             <tbody>
+                                <t t-foreach="o.request_line_ids" t-as="line">
+                                    <tr>
+                                        <td><span t-field="line.service_type"/></td>
+                                        <td><span t-field="line.product_id"/></td>
+                                        <td class="text-end"><span t-field="line.quantity"/></td>
+                                        <td class="text-end">
+                                            <span t-field="line.price_subtotal" t-options='{"widget": "monetary", "display_currency": o.currency_id}'/>
+                                        </td>
+                                    </tr>
+                                </t>
+                            </tbody>
+                            <tfoot>
                                 <tr>
-                                    <td><span t-field="o.description"/></td>
+                                    <td colspan="3" class="text-end">Cộng tiền hàng:</td>
                                     <td class="text-end">
-                                        <span t-field="o.amount_estimate" t-options='{"widget": "monetary", "display_currency": o.env.company.currency_id}'/>
+                                        <span t-field="o.amount_untaxed" t-options='{"widget": "monetary", "display_currency": o.currency_id}'/>
                                     </td>
                                 </tr>
-                            </tbody>
+                                <tr>
+                                    <td colspan="3" class="text-end">Thuế (1%):</td>
+                                    <td class="text-end">
+                                        <span t-field="o.amount_tax" t-options='{"widget": "monetary", "display_currency": o.currency_id}'/>
+                                    </td>
+                                </tr>
+                                <tr style="font-weight: bold;">
+                                    <td colspan="3" class="text-end">Tổng cộng:</td>
+                                    <td class="text-end">
+                                        <span t-field="o.amount_total" t-options='{"widget": "monetary", "display_currency": o.currency_id}'/>
+                                    </td>
+                                </tr>
+                            </tfoot>
                         </table>
 
                         <!-- Notes Section -->

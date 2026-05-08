@@ -1,0 +1,136 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+    <!-- Inventory Views -->
+    <!-- <record id="view_laptop_inventory_search" model="ir.ui.view">
+        <field name="name">laptop.inventory.search</field>
+        <field name="model">laptop.inventory</field>
+        <field name="arch" type="xml">
+            <search>
+                <field name="name"/>
+                <filter name="inactive" string="Archived" domain="[('active','=',False)]"/>
+            </search>
+        </field>
+    </record>
+
+    <record id="view_laptop_inventory_tree" model="ir.ui.view">
+        <field name="name">laptop.inventory.tree</field>
+        <field name="model">laptop.inventory</field>
+        <field name="arch" type="xml">
+            <tree>
+                <field name="active" column_invisible="1"/>
+                <field name="name"/>
+                <field name="quantity"/>
+                <field name="buy_in_price"/>
+                <field name="sale_price_default"/>
+            </tree>
+        </field>
+    </record>
+
+    <record id="view_laptop_inventory_form" model="ir.ui.view">
+        <field name="name">laptop.inventory.form</field>
+        <field name="model">laptop.inventory</field>
+        <field name="arch" type="xml">
+            <form>
+                <sheet>
+                    <div class="oe_button_box" name="button_box">
+                        <button name="toggle_active" type="object" class="oe_stat_button" icon="fa-archive">
+                            <field name="active" widget="boolean_button" options='{"terminology": "archive"}'/>
+                        </button>
+                    </div>
+                    <group>
+                        <field name="name"/>
+                        <field name="quantity"/>
+                        <field name="buy_in_price"/>
+                        <field name="sale_price_default"/>
+                    </group>
+                </sheet>
+                <div class="oe_chatter">
+                    <field name="message_follower_ids"/>
+                    <field name="activity_ids"/>
+                    <field name="message_ids"/>
+                </div>
+            </form>
+        </field>
+    </record> -->
+
+    <!-- Sales Order Views -->
+    <record id="view_laptop_sale_tree" model="ir.ui.view">
+        <field name="name">laptop.sale.tree</field>
+        <field name="model">laptop.sale</field>
+        <field name="arch" type="xml">
+            <tree decoration-info="state == 'draft'" decoration-success="state == 'confirmed'">
+                <field name="name"/>
+                <field name="partner_id"/>
+                <field name="date_order"/>
+                <field name="amount_total" sum="Total Amount"/>
+                <field name="state" widget="badge" decoration-info="state == 'draft'" decoration-success="state == 'confirmed'"/>
+            </tree>
+        </field>
+    </record>
+
+    <record id="view_laptop_sale_form" model="ir.ui.view">
+        <field name="name">laptop.sale.form</field>
+        <field name="model">laptop.sale</field>
+        <field name="arch" type="xml">
+            <form>
+                <header>
+                    <button name="action_confirm" string="Confirm" type="object" class="oe_highlight" invisible="state != 'draft'"/>
+                    <button name="action_cancel" string="Cancel" type="object" invisible="state not in ['draft', 'confirmed']"/>
+                    <button name="action_draft" string="Set to Draft" type="object" invisible="state != 'cancelled'"/>
+                    <field name="state" widget="statusbar" statusbar_visible="draft,confirmed"/>
+                </header>
+
+                <sheet>
+                    <div class="oe_title">
+                        <h1>
+                            <field name="name" readonly="1"/>
+                        </h1>
+                    </div>
+                    <group>
+                        <group>
+                            <field name="partner_id" placeholder="Select Customer..." readonly="state != 'draft'"/>
+                        </group>
+                        <group>
+                            <field name="date_order" readonly="state != 'draft'"/>
+                        </group>
+                    </group>
+                    <notebook>
+                        <page string="Laptop Lines" name="laptop_lines">
+                            <field name="sale_line_ids" readonly="state != 'draft'">
+                                <tree editable="bottom">
+                                    <field name="product_id"/>
+                                    <field name="quantity"/>
+                                    <field name="price_unit"/>
+                                    <field name="price_subtotal"/>
+                                </tree>
+                            </field>
+                            <group class="oe_subtotal_footer oe_right">
+                                <field name="amount_total" class="oe_subtotal_footer_separator"/>
+                                <field name="margin_total" widget="monetary" string="Tổng lợi nhuận"/>
+                            </group>
+                        </page>
+                    </notebook>
+                </sheet>
+                <div class="oe_chatter">
+                    <field name="message_follower_ids"/>
+                    <field name="activity_ids"/>
+                    <field name="message_ids"/>
+                </div>
+            </form>
+        </field>
+    </record>
+
+    <!-- Actions -->
+    <!-- <record id="action_laptop_inventory" model="ir.actions.act_window">
+        <field name="name">Laptop Inventory</field>
+        <field name="res_model">laptop.inventory</field>
+        <field name="view_mode">tree,form</field>
+        <field name="search_view_id" ref="view_laptop_inventory_search"/>
+    </record> -->
+
+    <record id="action_laptop_sale" model="ir.actions.act_window">
+        <field name="name">Laptop Sales</field>
+        <field name="res_model">laptop.sale</field>
+        <field name="view_mode">tree,form</field>
+    </record>
+</odoo>

@@ -11,7 +11,6 @@
                   decoration-success="state == 'done'">
                 <field name="name"/>
                 <field name="customer_id" string="Customer"/>
-                <field name="service_type"/>
                 <field name="state" widget="badge"
                        decoration-info="state == 'draft'"
                        decoration-warning="state == 'submitted'"
@@ -34,7 +33,7 @@
                     <button name="action_done" string="Mark Done" type="object" class="oe_highlight" invisible="state != 'approved'"/>
                     <button name="action_cancel" string="Cancel Request" type="object" invisible="state in ('done','cancelled')"/>
                     <button name="action_reset_draft" string="Reset to Draft" type="object" invisible="state != 'cancelled'"/>
-                    <button name="action_reopen" string="Reopen Request" type="object" invisible="state != 'done'"/>
+                    <button name="action_reopen" string="Reopen Request" type="object" invisible="state != 'done'" groups="service_request_managemen.group_service_request_manager"/>
                     <field name="state" widget="statusbar" statusbar_visible="draft,submitted,approved,done"/>
                 </header>
                 <sheet>
@@ -49,21 +48,32 @@
                             <field name="request_date"/>
                         </group>
                         <!-- Group 2: Service Information -->
-                        <group string="Service Information">
-                            <field name="service_type"/>
-                            <field name="amount_estimate"/>
-                        </group>
-                    </group>
-                    <!-- Group 3: Deadline + Assigned -->
-                    <group string="Assignment &amp; Deadline">
-                        <group>
+                        <group string="Assignment &amp; Deadline">
                             <field name="assigned_to" placeholder="Select employee..."/>
-                        </group>
-                        <group>
                             <field name="deadline"/>
                         </group>
                     </group>
+                    <field name="currency_id" invisible="1"/>
                     <notebook>
+                        <page string="Service Lines">
+                            <field name="request_line_ids" mode="tree" editable="bottom" nolabel="1">
+                                <tree string="Service Lines">
+                                    <field name="service_type"/>
+                                    <field name="product_id"/>
+                                    <field name="name"/>
+                                    <field name="quantity"/>
+                                    <field name="price_unit"/>
+                                    <field name="discount"/>
+                                    <field name="currency_id" column_invisible="1"/>
+                                    <field name="price_subtotal" widget="monetary" options="{'currency_field': 'currency_id'}"/>
+                                </tree>
+                            </field>
+                            <group class="oe_subtotal_footer oe_right">
+                                <field name="amount_untaxed" widget="monetary" options="{'currency_field': 'currency_id'}"/>
+                                <field name="amount_tax" widget="monetary" options="{'currency_field': 'currency_id'}"/>
+                                <field name="amount_total" widget="monetary" options="{'currency_field': 'currency_id'}" class="oe_subtotal_footer_separator"/>
+                            </group>
+                        </page>
                         <page string="Description">
                             <field name="description" placeholder="Enter service request details..." nolabel="1"/>
                         </page>
@@ -95,4 +105,9 @@
     <!-- Menu -->
     <menuitem id="menu_service_request_root" name="Service" web_icon="base,static/description/settings.png" sequence="10"/>
     <menuitem id="menu_service_request_main" name="All Requests" parent="menu_service_request_root" action="action_service_request" sequence="1"/>
+
+    <menuitem id="menu_laptop_root" name="Laptop Management" parent="menu_service_request_root" sequence="10"/>
+    <menuitem id="menu_laptop_inventory" name="Inventory" parent="menu_laptop_root" action="action_laptop_inventory" sequence="1"/>
+    <menuitem id="menu_laptop_sale" name="Sales" parent="menu_laptop_root" action="action_laptop_sale" sequence="2"/>
 </odoo>
+

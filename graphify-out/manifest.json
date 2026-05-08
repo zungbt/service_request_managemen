@@ -1,0 +1,46 @@
+{
+  "C:\\Users\\d\\Documents\\GitHub\\service_request_managemen\\__init__.py": {
+    "mtime": 1777365939.3926213,
+    "hash": "d2a452eb92438226daa64b6dde86db1c"
+  },
+  "C:\\Users\\d\\Documents\\GitHub\\service_request_managemen\\__manifest__.py": {
+    "mtime": 1777953472.9435823,
+    "hash": "f43bcac11878edad131eeadd06f86e36"
+  },
+  "C:\\Users\\d\\Documents\\GitHub\\service_request_managemen\\controllers\\__init__.py": {
+    "mtime": 1777365939.4195147,
+    "hash": "d41d8cd98f00b204e9800998ecf8427e"
+  },
+  "C:\\Users\\d\\Documents\\GitHub\\service_request_managemen\\models\\laptop.py": {
+    "mtime": 1777953958.4291723,
+    "hash": "f9cb196646e7d798995508446d8af450"
+  },
+  "C:\\Users\\d\\Documents\\GitHub\\service_request_managemen\\models\\main.py": {
+    "mtime": 1777954024.919075,
+    "hash": "ede59492915d551b217a94bf1b74f86f"
+  },
+  "C:\\Users\\d\\Documents\\GitHub\\service_request_managemen\\models\\request_line.py": {
+    "mtime": 1777445767.0688784,
+    "hash": "2ddefad9de65dc95e2e744796c559654"
+  },
+  "C:\\Users\\d\\Documents\\GitHub\\service_request_managemen\\models\\__init__.py": {
+    "mtime": 1777882711.3850935,
+    "hash": "ceb13f7fca12ef14cf82455dd0d69793"
+  },
+  "C:\\Users\\d\\Documents\\GitHub\\service_request_managemen\\wizard\\__init__.py": {
+    "mtime": 1777365939.5470886,
+    "hash": "d41d8cd98f00b204e9800998ecf8427e"
+  },
+  "C:\\Users\\d\\Documents\\GitHub\\service_request_managemen\\CLAUDE.md": {
+    "mtime": 1776823265.829082,
+    "hash": "ffd89ee617f900f32fab4d4ae3fadc8f"
+  },
+  "C:\\Users\\d\\Documents\\GitHub\\service_request_managemen\\README.md": {
+    "mtime": 1777365939.3806846,
+    "hash": "a100719ec6dba0d2c45ba167d8050323"
+  },
+  "C:\\Users\\d\\Documents\\GitHub\\service_request_managemen\\TODO.md": {
+    "mtime": 1777952275.4827874,
+    "hash": "eb5bfe72c33e0fbb25783bc472d482eb"
+  }
+}
