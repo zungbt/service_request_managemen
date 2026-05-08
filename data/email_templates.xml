@@ -1,0 +1,151 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+    <!-- Template khi Gửi yêu cầu (Submit) -->
+    <record id="email_template_submit" model="mail.template">
+        <field name="name">Service Request: Submitted</field>
+        <field name="model_id" ref="service_request_managemen.model_service_request"/>
+        <field name="subject">[Service Request] {{ object.name }} đã được tạo</field>
+        <field name="email_to">{{ object.customer_id.email }}</field>
+        <field name="body_html" type="html">
+            <div style="margin: 0px; padding: 0px; font-family: 'Segoe UI', Roboto, Helvetica, Arial, sans-serif;">
+                <p>Kính chào <strong><t t-out="object.customer_id.name"/></strong>,</p>
+                <p>Yêu cầu dịch vụ của quý khách đã được tạo thành công với mã số: <strong><t t-out="object.name"/></strong>.</p>
+                
+                <div style="margin: 16px 0px; padding: 15px; border-left: 3px solid #875A7B; background-color: #F8F8F8;">
+                    <strong>Thông tin yêu cầu:</strong><br/>
+                    - Ngày yêu cầu: <span t-field="object.request_date" t-options='{"widget": "datetime", "format": "dd/MM/yyyy HH:mm:ss"}'/><br/>
+                    
+                    <table style="width: 100%; border-collapse: collapse; margin-top: 10px; background-color: white;">
+                        <thead>
+                            <tr style="background-color: #eee;">
+                                <th style="border: 1px solid #ddd; padding: 8px; text-align: left;">Loại</th>
+                                <th style="border: 1px solid #ddd; padding: 8px; text-align: left;">Dịch vụ</th>
+                                <th style="border: 1px solid #ddd; padding: 8px; text-align: right;">SL</th>
+                                <th style="border: 1px solid #ddd; padding: 8px; text-align: right;">Thành tiền</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            <t t-foreach="object.request_line_ids" t-as="line">
+                                <tr>
+                                    <td style="border: 1px solid #ddd; padding: 8px;"><t t-out="line.service_type"/></td>
+                                    <td style="border: 1px solid #ddd; padding: 8px;"><t t-out="line.product_id.name"/></td>
+                                    <td style="border: 1px solid #ddd; padding: 8px; text-align: right;"><t t-out="line.quantity"/></td>
+                                    <td style="border: 1px solid #ddd; padding: 8px; text-align: right;"><span t-field="line.price_subtotal" t-options='{"widget": "monetary", "display_currency": object.currency_id}'/></td>
+                                </tr>
+                            </t>
+                        </tbody>
+                        <tfoot>
+                            <tr>
+                                <td colspan="3" style="border: 1px solid #ddd; padding: 8px; text-align: right;">Cộng tiền hàng:</td>
+                                <td style="border: 1px solid #ddd; padding: 8px; text-align: right;"><span t-field="object.amount_untaxed" t-options='{"widget": "monetary", "display_currency": object.currency_id}'/></td>
+                            </tr>
+                            <tr>
+                                <td colspan="3" style="border: 1px solid #ddd; padding: 8px; text-align: right;">Thuế Ato (1%):</td>
+                                <td style="border: 1px solid #ddd; padding: 8px; text-align: right;"><span t-field="object.amount_tax" t-options='{"widget": "monetary", "display_currency": object.currency_id}'/></td>
+                            </tr>
+                            <tr>
+                                <td colspan="3" style="border: 1px solid #ddd; padding: 8px; text-align: right;"><strong>Tổng cộng:</strong></td>
+                                <td style="border: 1px solid #ddd; padding: 8px; text-align: right; color: #875A7B;"><strong><span t-field="object.amount_total" t-options='{"widget": "monetary", "display_currency": object.currency_id}'/></strong></td>
+                            </tr>
+                        </tfoot>
+                    </table>
+                </div>
+
+                <p>Quý khách có thể theo dõi trạng thái yêu cầu bằng cách bấm vào nút bên dưới:</p>
+                <div style="margin: 16px 0px;">
+                    <a t-att-href="object.get_base_url() + '/web#id=%s&amp;model=%s&amp;view_type=form' % (object.id, object._name)"
+                       style="padding: 10px 20px; text-decoration: none; color: #fff; background-color: #875A7B; border-radius: 5px; font-weight: bold;">
+                        Xem chi tiết yêu cầu
+                    </a>
+                </div>
+                
+                <p>Trân trọng!</p>
+            </div>
+        </field>
+    </record>
+
+    <!-- Template khi Phê duyệt (Approved) -->
+    <record id="email_template_approved" model="mail.template">
+        <field name="name">Service Request: Approved</field>
+        <field name="model_id" ref="service_request_managemen.model_service_request"/>
+        <field name="subject">[Service Request] {{ object.name }} đã được phê duyệt</field>
+        <field name="email_to">{{ object.customer_id.email }}</field>
+        <field name="body_html" type="html">
+            <div style="margin: 0px; padding: 0px; font-family: 'Segoe UI', Roboto, Helvetica, Arial, sans-serif;">
+                <p>Chào quý khách,</p>
+                <p>Yêu cầu dịch vụ <strong><t t-out="object.name"/></strong> của quý khách đã được <strong>PHÊ DUYỆT</strong>.</p>
+                
+                <div style="margin: 16px 0px; padding: 15px; border-left: 3px solid #00A09D; background-color: #F8F8F8;">
+                    - Thời hạn hoàn thành: <span t-field="object.deadline" t-options='{"widget": "datetime", "format": "dd/MM/yyyy HH:mm:ss"}'/><br/>
+
+                    <table style="width: 100%; border-collapse: collapse; margin-top: 10px; background-color: white;">
+                        <thead>
+                            <tr style="background-color: #eee;">
+                                <th style="border: 1px solid #ddd; padding: 8px; text-align: left;">Loại</th>
+                                <th style="border: 1px solid #ddd; padding: 8px; text-align: left;">Dịch vụ</th>
+                                <th style="border: 1px solid #ddd; padding: 8px; text-align: right;">SL</th>
+                                <th style="border: 1px solid #ddd; padding: 8px; text-align: right;">Thành tiền</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            <t t-foreach="object.request_line_ids" t-as="line">
+                                <tr>
+                                    <td style="border: 1px solid #ddd; padding: 8px;"><t t-out="line.service_type"/></td>
+                                    <td style="border: 1px solid #ddd; padding: 8px;"><t t-out="line.product_id.name"/></td>
+                                    <td style="border: 1px solid #ddd; padding: 8px; text-align: right;"><t t-out="line.quantity"/></td>
+                                    <td style="border: 1px solid #ddd; padding: 8px; text-align: right;"><span t-field="line.price_subtotal" t-options='{"widget": "monetary", "display_currency": object.currency_id}'/></td>
+                                </tr>
+                            </t>
+                        </tbody>
+                        <tfoot>
+                            <tr>
+                                <td colspan="3" style="border: 1px solid #ddd; padding: 8px; text-align: right;">Cộng tiền hàng:</td>
+                                <td style="border: 1px solid #ddd; padding: 8px; text-align: right;"><span t-field="object.amount_untaxed" t-options='{"widget": "monetary", "display_currency": object.currency_id}'/></td>
+                            </tr>
+                            <tr>
+                                <td colspan="3" style="border: 1px solid #ddd; padding: 8px; text-align: right;">Thuế Ato (1%):</td>
+                                <td style="border: 1px solid #ddd; padding: 8px; text-align: right;"><span t-field="object.amount_tax" t-options='{"widget": "monetary", "display_currency": object.currency_id}'/></td>
+                            </tr>
+                            <tr>
+                                <td colspan="3" style="border: 1px solid #ddd; padding: 8px; text-align: right;"><strong>Tổng cộng:</strong></td>
+                                <td style="border: 1px solid #ddd; padding: 8px; text-align: right; color: #00A09D;"><strong><span t-field="object.amount_total" t-options='{"widget": "monetary", "display_currency": object.currency_id}'/></strong></td>
+                            </tr>
+                        </tfoot>
+                    </table>
+                </div>
+
+                <div style="margin: 16px 0px;">
+                    <a t-att-href="object.get_base_url() + '/web#id=%s&amp;model=%s&amp;view_type=form' % (object.id, object._name)"
+                       style="padding: 10px 20px; text-decoration: none; color: #fff; background-color: #00A09D; border-radius: 5px; font-weight: bold;">
+                        Xem tiến độ xử lý
+                    </a>
+                </div>
+
+                <p>Cảm ơn quý khách!</p>
+            </div>
+        </field>
+    </record>
+
+    <!-- Template nhắc nhở Deadline (Cron) -->
+    <record id="email_template_deadline_reminder" model="mail.template">
+        <field name="name">Service Request: Deadline Reminder</field>
+        <field name="model_id" ref="service_request_managemen.model_service_request"/>
+        <field name="subject">Bạn có 1 yêu cầu dịch vụ sắp đến hạn: {{ object.name }}</field>
+        <field name="email_to">{{ object.customer_id.email }}</field>
+        <field name="body_html" type="html">
+            <div style="margin: 0px; padding: 0px; font-family: 'Segoe UI', Roboto, Helvetica, Arial, sans-serif;">
+                <p>Chào bạn,</p>
+                <p><strong>Bạn có 1 yêu cầu dịch vụ sắp đến hạn hoàn thành:</strong></p>
+                <p>Mã yêu cầu: <strong><t t-out="object.name"/></strong><br/>
+                   Hạn chót: <strong><span t-field="object.deadline" t-options='{"widget": "datetime", "format": "dd/MM/yyyy HH:mm:ss"}'/></strong></p>
+                
+                <div style="margin: 16px 0px;">
+                    <a t-att-href="object.get_base_url() + '/web#id=%s&amp;model=%s&amp;view_type=form' % (object.id, object._name)"
+                       style="padding: 10px 20px; text-decoration: none; color: #fff; background-color: #D9534F; border-radius: 5px; font-weight: bold;">
+                        Xử lý ngay
+                    </a>
+                </div>
+            </div>
+        </field>
+    </record>
+</odoo>

@@ -63,7 +63,8 @@ venv.bak/
 # Odoo specific
 *.log
 *.conf
-/data/
+# /data/  <-- Removed to allow tracking Odoo data files
+
 
 # IDE files
 .vscode/
@@ -80,3 +81,8 @@ STAGE_*.md
 TECHNICAL_DOC.md
 implementation_plan.md
 XÂY DỰNG MODULE QUẢN LÝ DỊCH VỤ (SERVICE REQUEST).md
+
+# AI and Tool-specific files
+.claude/
+.graphify*
+graphify-out/
