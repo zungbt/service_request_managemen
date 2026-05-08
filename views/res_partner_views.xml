@@ -1,0 +1,47 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+    <!-- Inherit view form của res.partner để thêm field và smart button -->
+    <record id="view_partner_form_inherit_service" model="ir.ui.view">
+        <field name="name">res.partner.form.inherit.service</field>
+        <field name="model">res.partner</field>
+        <field name="inherit_id" ref="base.view_partner_form"/>
+        <field name="arch" type="xml">
+            <!-- Thêm field is_service_vip vào notebook page Sales & Purchase -->
+            <xpath expr="//page[@name='sales_purchases']//group[@name='sale']" position="inside">
+                <field name="is_service_vip"/>
+            </xpath>
+
+            <!-- Thêm Smart Button vào box stat_button (nút ở góc trên phải form) -->
+            <div name="button_box" position="inside">
+                <button name="action_view_service_requests" type="object" class="oe_stat_button" icon="fa-wrench">
+                    <field name="service_request_count" widget="statinfo" string="Service Requests"/>
+                </button>
+            </div>
+        </field>
+    </record>
+
+    <!-- Inherit view tree của res.partner để thêm cột is_service_vip -->
+    <record id="view_partner_tree_inherit_service" model="ir.ui.view">
+        <field name="name">res.partner.tree.inherit.service</field>
+        <field name="model">res.partner</field>
+        <field name="inherit_id" ref="base.view_partner_tree"/>
+        <field name="arch" type="xml">
+            <xpath expr="//field[@name='email']" position="after">
+                <field name="is_service_vip" optional="show"/>
+            </xpath>
+        </field>
+    </record>
+
+    <!-- Inherit Search view để có thể lọc VIP -->
+    <record id="view_res_partner_filter_inherit_service" model="ir.ui.view">
+        <field name="name">res.partner.search.inherit.service</field>
+        <field name="model">res.partner</field>
+        <field name="inherit_id" ref="base.view_res_partner_filter"/>
+        <field name="arch" type="xml">
+            <xpath expr="//filter[@name='type_company']" position="after">
+                <separator/>
+                <filter string="VIP Service Customers" name="filter_service_vip" domain="[('is_service_vip', '=', True)]"/>
+            </xpath>
+        </field>
+    </record>
+</odoo>

@@ -77,6 +77,7 @@ venv.bak/
 Thumbs.db
 
 # Internal documentation and plans
+docs/
 STAGE_*.md
 TECHNICAL_DOC.md
 implementation_plan.md
@@ -109,4 +110,3 @@ sessions/
 .claude/
 .graphify*
 graphify-out/
-docs/

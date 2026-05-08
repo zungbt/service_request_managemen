@@ -16,6 +16,7 @@
         'data/cron.xml',
         'views/laptop_view.xml',
         'views/service_request_views.xml',
+        'views/res_partner_views.xml',
         'wizard/service_request_reopen_wizard_view.xml',
         'report/report_action.xml',
 
